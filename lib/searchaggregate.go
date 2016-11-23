@@ -94,6 +94,22 @@ func (d *AggregateDsl) Percentiles(field string) *AggregateDsl {
 	return d
 }
 
+type Nested struct {
+	Path string `json:"path"`
+}
+
+func (d *AggregateDsl) Nested(path string) *AggregateDsl {
+	d.Type = Nested{Path: path}
+	d.TypeName = "nested"
+	return d
+}
+
+func (d *AggregateDsl) ReverseNested() *AggregateDsl {
+	d.Type = struct{}{}
+	d.TypeName = "reverse_nested"
+	return d
+}
+
 type Cardinality struct {
 	Field              string  `json:"field"`
 	PrecisionThreshold float64 `json:"precision_threshold,omitempty"`
